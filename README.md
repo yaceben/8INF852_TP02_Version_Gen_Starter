@@ -1,13 +1,12 @@
 # 8INF852_TP02_Version_Gen_Starter
 
 ## requis
-L'utilisation du code requiert les librairies suivantes:
+Code de base vous permettant d'amorcer le travail du TP 2
 
-mwxml <br>
-nltk
+L'utilisation du code requiert la librairie nltk
 
 
 ```
-pip install nltk mwxml
+pip install nltk
 
 ```
