@@ -5,9 +5,11 @@ import requests
 def generate_dictionary():
     """Fonction qui va chercher un dictionnaire sur le web et effectue un prétraitement pour 
     retourner un dictionnaire utilisable pour votre TP.
+    
+    ATTENTION: ne l'utilisez pas tel-quel pour vérifier l'existence d'un mot car ce sera trop lent!.
 
     Returns:
-        list: un dictionnaire de mots uniques trié.
+        list: un "dictionnaire" de mots uniques trié.
     """
     lexique_url = "http://www.lexique.org/databases/Lexique383/Lexique383.zip"
 
