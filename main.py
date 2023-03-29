@@ -11,7 +11,6 @@ import gen_lm
 import generate_corpus
 
 
-
 #%%
 # voici une brève démonstration de l'utilisation du code fourni
 
@@ -23,7 +22,7 @@ corpus_entrainement = dictionnaire
 
 trigram_model = gen_lm.build_trigram_model(corpus_entrainement)
 
-mots = ['bonjour', 'jourbon', 'manger']
+mots = ['bonjour', 'jourbon', 'manger', 'aaaaa', 'allo']
 
 
 # %%

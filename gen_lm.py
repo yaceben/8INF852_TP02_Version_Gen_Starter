@@ -49,6 +49,9 @@ def perplexité(mot: str, trigram_model: ConditionalFreqDist) -> float:
             if prob > 0:
                 log_prob_sum += np.log2(prob)
                 n += 1
+            else:
+                log_prob_sum += np.log2(0.0000000001)
+                n += 1
         except KeyError: # pas top si ça arrive -- on ne veut pas vraiment de zero prob
             # on peut faire quelquechose de 💩
             # ça veut aussi dire qu'on ne parle plus de vraiii probabilités... 
