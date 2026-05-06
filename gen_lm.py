@@ -4,6 +4,9 @@ from nltk.lm.preprocessing import pad_both_ends
 from nltk.lm.preprocessing import flatten
 from nltk import FreqDist, ConditionalFreqDist
 
+import math
+
+_LOG_FLOOR = math.log(1e-10)  # on calcule d'avance notre "probabilité minimale" << ça sauve pas mal de temps calcul
 
 def build_trigram_model(text: list):
     """Entraine une "character-based trigram" à partir d'un corpus d'entrainement. 
@@ -40,6 +43,8 @@ def perplexité(mot: str, trigram_model: ConditionalFreqDist) -> float:
     log_prob_sum = 0
     n = 0
 
+    # Notez bien que le code n'est pas optimal, mais présenté de façon plutôt pédagogique
+    # utilisation de math au lieu de np.log2, np.exp, etc. mais si vous faites de la vectorisation, privilégiez np
     for trigram in trigrammes:
         bigram = trigram[:2] # le contexte m_i-1,m_i-2
         car = trigram[2] # le m_i
@@ -47,21 +52,21 @@ def perplexité(mot: str, trigram_model: ConditionalFreqDist) -> float:
         try:
             prob = trigram_model[bigram].freq(car)
             if prob > 0:
-                log_prob_sum += np.log2(prob)
+                log_prob_sum += math.log(prob)
                 n += 1
             else:
-                log_prob_sum += np.log2(0.0000000001)
+                log_prob_sum += _LOG_FLOOR
                 n += 1
         except KeyError: # pas top si ça arrive -- on ne veut pas vraiment de zero prob
             # on peut faire quelquechose de 💩
             # ça veut aussi dire qu'on ne parle plus de vraiii probabilités... 
-            log_prob_sum += np.log2(0.0000000001)
+            log_prob_sum += _LOG_FLOOR
             n += 1
             continue
 
     if n > 0:
-        entropie = -log_prob_sum / n
-        return 2 ** entropie
+        #entropie = -log_prob_sum / n
+        return math.exp(-log_prob_sum / n) #2 ** entropie
     else:
         return np.inf # en gros, un mot impossible...
     
